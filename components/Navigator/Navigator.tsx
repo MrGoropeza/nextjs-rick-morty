@@ -7,9 +7,13 @@ interface Props {
 
 const Navigator = ({ pathNames }: Props) => {
   return (
-    <div className="flex gap-4">
+    <div className="flex w-full gap-4 overflow-auto bg-gray-900/50 min-[400px]:justify-center">
       {pathNames.map((pathName) => (
-        <Link href={pathName.path} key={pathName.path}>
+        <Link
+          className="rounded-md p-4 text-xl underline underline-offset-4 hover:bg-green-700 hover:no-underline md:text-2xl"
+          href={pathName.path}
+          key={pathName.path}
+        >
           {pathName.name}
         </Link>
       ))}
