@@ -16,7 +16,7 @@ const Card = ({ data }: Props) => {
   formatedType ||= "No type";
 
   return (
-    <div className="bg-orange-300 p-4 rounded-md w-fit shadow-sm">
+    <div className="w-fit rounded-md bg-orange-300 p-4 shadow-sm">
       <p>Name: {data.name}</p>
       <p>Type: {formatedType}</p>
       <p>Created: {data.created}</p>
@@ -26,6 +26,7 @@ const Card = ({ data }: Props) => {
           height={100}
           alt={`${data.name} picture`}
           src={data.image}
+          priority
         />
       )}
     </div>
