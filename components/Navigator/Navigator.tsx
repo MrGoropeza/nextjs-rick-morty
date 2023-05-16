@@ -9,7 +9,7 @@ const Navigator = ({ pathNames }: Props) => {
   return (
     <div className="flex gap-4">
       {pathNames.map((pathName) => (
-        <Link href={pathName.path} key={pathName.name}>
+        <Link href={pathName.path} key={pathName.path}>
           {pathName.name}
         </Link>
       ))}

@@ -1,7 +1,9 @@
 import { Inter } from "next/font/google";
+import Image from "next/image";
+import wallpaper from "../public/images/rick-morty-wallpaper.jpg";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "optional" });
 
 export const metadata = {
   title: "Create Next App",
@@ -15,7 +17,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} bg-slate-800/40`}>
+        {children}
+        <Image
+          className="fixed top-0 -z-10 h-full object-cover blur-[3px] brightness-50"
+          src={wallpaper}
+          alt="Rick & Morty Wallpaper"
+          placeholder="blur"
+        />
+      </body>
     </html>
   );
 }
