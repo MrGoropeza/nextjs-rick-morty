@@ -1,5 +1,6 @@
 import { Routes } from "@/app/models";
-import { Card, Navigator } from "@/components";
+import { Navigator } from "@/components";
+import { CharacterCard } from "./components";
 import { getCharacters } from "./services";
 
 async function fetchCharacters() {
@@ -13,9 +14,11 @@ const Characters = async () => {
   return (
     <>
       <Navigator pathNames={[Routes.HOME, Routes.LOCATIONS]} />
-      {characters.map((character) => (
-        <Card key={character.id} data={character} />
-      ))}
+      <div className="m-4 grid grid-cols-1 gap-2 lg:grid-cols-2 2xl:grid-cols-3">
+        {characters.map((character) => (
+          <CharacterCard key={character.id} data={character} />
+        ))}
+      </div>
     </>
   );
 };
