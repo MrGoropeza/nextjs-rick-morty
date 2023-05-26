@@ -17,25 +17,31 @@ export class RickMortyService<Model extends BaseModel, Filter extends object> {
     this.baseUrl = url;
   }
 
+  modelMapper(model: Model): Model {
+    return model;
+  }
+
   async getAll(
     page: number = 1,
     filters?: Filter
   ): Promise<RickMortyResponse<Model>> {
     const url = this.buildUrl(page, filters);
     const response = await this.instance.get<RickMortyResponse<Model>>(url);
+    response.data.results = response.data.results.map(this.modelMapper);
     return response.data;
   }
 
   async getSingle(id: string): Promise<Model> {
     const url = `${this.baseUrl}/${id}`;
     const response = await this.instance.get<Model>(url);
-    return response.data;
+    return this.modelMapper(response.data);
   }
 
   async getMultiple(ids: number[]): Promise<Model[]> {
     const parsedIds = Array.from(new Set(ids));
     const url = `${this.baseUrl}/${parsedIds.toString()}`;
     const response = await this.instance.get<Model[]>(url);
+    response.data = response.data.map(this.modelMapper);
 
     return ids.map(
       (id) => response.data.find((model) => model.id === id) ?? ({} as Model)
