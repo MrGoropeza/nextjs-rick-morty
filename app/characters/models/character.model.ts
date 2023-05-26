@@ -1,3 +1,5 @@
+import { Episode } from "@/app/episodes/models/episode.model";
+
 export interface Character {
   id: number;
   name: string;
@@ -11,6 +13,7 @@ export interface Character {
   episode: string[];
   url: string;
   created: string;
+  episodes?: Episode[];
 }
 
 export interface Origin {
