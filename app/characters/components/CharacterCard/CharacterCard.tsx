@@ -40,7 +40,7 @@ const CharacterCard = ({ data }: Props) => {
         </p>
         <p className="flex flex-col">
           <span className="text-slate-300">First seen in:</span>
-          {/* {data.episode[0]} */}
+          {data.episodes && data.episodes[0] && data.episodes[0].name}
         </p>
       </div>
     </div>
