@@ -1,7 +1,11 @@
+import "primeicons/primeicons.css";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/md-dark-indigo/theme.css";
+import "./globals.css";
+
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import wallpaper from "../public/images/rick-morty-wallpaper.jpg";
-import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], display: "optional" });
 
