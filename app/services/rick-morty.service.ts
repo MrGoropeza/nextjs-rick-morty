@@ -1,35 +1,43 @@
 import axios from "axios";
 import { RickMortyResponse } from "../models/response.model";
 
-export class RickMortyService<Model, Filter extends object> {
-  instance = axios.create({ baseURL: "https://rickandmortyapi.com/api/" });
+interface BaseModel {
+  id: number;
   url: string;
+  created: string;
+}
+
+export class RickMortyService<Model extends BaseModel, Filter extends object> {
+  instance = axios.create({ baseURL: "https://rickandmortyapi.com/api/" });
+  baseUrl: string;
 
   constructor(url: string) {
-    this.url = url;
+    this.baseUrl = url;
   }
 
   async getAll(
     page: number = 1,
     filters?: Filter
   ): Promise<RickMortyResponse<Model>> {
-    const response = await this.instance.get<RickMortyResponse<Model>>(
-      this.buildUrl(page, filters)
-    );
-
+    const url = this.buildUrl(page, filters);
+    const response = await this.instance.get<RickMortyResponse<Model>>(url);
     return response.data;
   }
 
   async getSingle(id: string): Promise<Model> {
-    const response = await this.instance.get<Model>(`${this.url}/${id}`);
+    const url = `${this.baseUrl}/${id}`;
+    const response = await this.instance.get<Model>(url);
     return response.data;
   }
 
-  async getMultiple(ids: string[]): Promise<Model[]> {
-    const response = await this.instance.get<Model[]>(
-      `${this.url}/${ids.toString}`
+  async getMultiple(ids: number[]): Promise<Model[]> {
+    const parsedIds = Array.from(new Set(ids));
+    const url = `${this.baseUrl}/${parsedIds.toString()}`;
+    const response = await this.instance.get<Model[]>(url);
+
+    return ids.map(
+      (id) => response.data.find((model) => model.id === id) ?? ({} as Model)
     );
-    return response.data;
   }
 
   private buildUrl(page: number, filters?: Filter): string {
@@ -40,6 +48,6 @@ export class RickMortyService<Model, Filter extends object> {
       ""
     );
 
-    return `${this.url}?page=${page}${filterParams}`;
+    return `${this.baseUrl}?page=${page}${filterParams}`;
   }
 }
