@@ -1,6 +1,8 @@
 import axios from "axios";
 import { RickMortyResponse } from "../models/response.model";
 
+const API_URL = "https://rickandmortyapi.com/api/";
+
 interface BaseModel {
   id: number;
   url: string;
@@ -8,7 +10,7 @@ interface BaseModel {
 }
 
 export class RickMortyService<Model extends BaseModel, Filter extends object> {
-  instance = axios.create({ baseURL: "https://rickandmortyapi.com/api/" });
+  instance = axios.create({ baseURL: API_URL });
   baseUrl: string;
 
   constructor(url: string) {
@@ -38,6 +40,17 @@ export class RickMortyService<Model extends BaseModel, Filter extends object> {
     return ids.map(
       (id) => response.data.find((model) => model.id === id) ?? ({} as Model)
     );
+  }
+
+  getId(url: string) {
+    if (!url.includes(API_URL)) return 0;
+
+    const result = url
+      .replace(API_URL, "")
+      .replace(this.baseUrl, "")
+      .replace("/", "");
+
+    return Number.parseInt(result);
   }
 
   private buildUrl(page: number, filters?: Filter): string {
