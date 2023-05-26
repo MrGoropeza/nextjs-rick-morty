@@ -62,6 +62,7 @@ export class RickMortyService<Model extends BaseModel, Filter extends object> {
   private buildUrl(page: number, filters?: Filter): string {
     const filterParams = Object.entries(filters ?? {}).reduce(
       (prev, current) => {
+        if (!current[1]) return prev;
         return `${prev}&${current[0]}=${current[1]}`;
       },
       ""
