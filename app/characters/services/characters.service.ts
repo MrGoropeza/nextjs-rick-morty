@@ -1,6 +1,5 @@
-import { RickMortyService } from "@/app/services/rick-morty.service";
-import { Character } from "../models";
-import { CharacterFilter } from "../models/character-filter.model";
+import { RickMortyService } from "@/app/services";
+import { Character, CharacterFilter } from "../models";
 
 class CharacterService extends RickMortyService<Character, CharacterFilter> {
   constructor() {
