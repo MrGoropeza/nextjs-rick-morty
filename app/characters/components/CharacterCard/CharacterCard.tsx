@@ -12,6 +12,11 @@ const CharacterCard = ({ data }: Props) => {
     unknown: "bg-gray-600",
   };
 
+  const firstSeen =
+    data.episodes &&
+    data.episodes[0] &&
+    `${data.episodes[0].episode} - ${data.episodes[0].name}`;
+
   return (
     <div className="flex gap-2">
       {!!data.image && (
@@ -40,7 +45,7 @@ const CharacterCard = ({ data }: Props) => {
         </p>
         <p className="flex flex-col">
           <span className="text-slate-300">First seen in:</span>
-          {data.episodes && data.episodes[0] && data.episodes[0].name}
+          {firstSeen}
         </p>
       </div>
     </div>
