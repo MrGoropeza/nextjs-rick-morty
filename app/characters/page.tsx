@@ -1,11 +1,24 @@
 import { Routes } from "@/app/models";
 import { Navigator } from "@/components";
+import { episodeService } from "../episodes/services";
 import { CharacterCard } from "./components";
-import { getCharacters } from "./services";
+import { characterService } from "./services";
 
 async function fetchCharacters() {
-  const response = await getCharacters();
-  return response;
+  const response = await characterService.getAll(1);
+
+  const firstEpisodesIds = response.results.map((character) => {
+    return episodeService.getId(character.episode[0]);
+  });
+
+  const firstEpisodes = await episodeService.getMultiple(firstEpisodesIds);
+
+  response.results.forEach((character, index) => {
+    character.episodes = [];
+    character.episodes.push(firstEpisodes[index]);
+  });
+
+  return response.results;
 }
 
 const Characters = async () => {
